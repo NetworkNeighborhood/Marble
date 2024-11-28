@@ -560,13 +560,21 @@ void nsImageFrame::DidSetComputedStyle(ComputedStyle* aOldStyle) {
     // Fetch the subrect used for clipping the image:
     // Because this is only set from within here, subrects don't work at all
     // outside of <xul:image> elements, so they don't affect web content.
-    mSubRect = StyleList()->GetImageRegion();
+    bool needToUpdate = false;
+    nsRect newRect = StyleList()->GetImageRegion();
+    if (!newRect.IsEqualInterior(aOldStyle->StyleList()->GetImageRegion())) {
+      mSubRect = newRect;
+      needToUpdate = true;
+    }
 
     if (!mContent->AsElement()->HasNonEmptyAttr(nsGkAtoms::src) &&
         aOldStyle->StyleList()->mListStyleImage !=
             StyleList()->mListStyleImage) {
-      UpdateXULImage();
+      needToUpdate = true;
     }
+
+    if (needToUpdate)
+      UpdateXULImage();
     // If we have no image our intrinsic size might be themed. We need to
     // update the size even if the effective appearance hasn't changed to
     // deal correctly with theme changes.
