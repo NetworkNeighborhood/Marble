@@ -1,3 +1,7 @@
+# Deprecation notice
+Marble is getting redone with Firefox 128ESR as it's base, with new customization options, bugfixes, and general stability.
+Check out the new branch: https://github.com/NetworkNeighborhood/Marble/tree/esr128
+
 # Marble Browser (Marblefox)
 A Firefox-based web browser that aims to restore native design features. It's still pretty barebones, but give it a try!
 Current options include:
