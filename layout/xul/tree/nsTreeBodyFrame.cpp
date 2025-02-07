@@ -2823,8 +2823,8 @@ ImgDrawResult nsTreeBodyFrame::PaintSeparator(int32_t aRowIndex,
 
     // Obtain the height for the separator or use the default value.
     nscoord height;
-    if (stylePosition->GetHeight().ConvertsToLength()) {
-      height = stylePosition->GetHeight().ToLength();
+    if (stylePosition->mHeight.ConvertsToLength()) {
+      height = stylePosition->mHeight.ToLength();
     } else {
       // Use default height 2px.
       height = nsPresContext::CSSPixelsToAppUnits(2);
