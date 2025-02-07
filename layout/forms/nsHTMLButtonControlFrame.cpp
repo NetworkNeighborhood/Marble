@@ -10,6 +10,7 @@
 #include "mozilla/PresShell.h"
 #include "nsIFrameInlines.h"
 #include "nsContainerFrame.h"
+#include "nsPresContextInlines.h"
 #include "nsIFormControlFrame.h"
 #include "nsPresContext.h"
 #include "nsLayoutUtils.h"
