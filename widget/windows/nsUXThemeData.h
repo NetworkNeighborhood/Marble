@@ -19,14 +19,30 @@
 enum nsUXThemeClass {
   eUXButton = 0,
   eUXEdit,
+  eUXRebar,
+  eUXMediaRebar,
+  eUXCommunicationsRebar,
+  eUXBrowserTabBarRebar,
   eUXToolbar,
+  eUXMediaToolbar,
+  eUXCommunicationsToolbar,
   eUXProgress,
   eUXTab,
   eUXTrackbar,
+  eUXSpin,
   eUXCombobox,
+  eUXHeader,
   eUXListview,
   eUXMenu,
+  eUXWindowFrame,
   eUXNumClasses
+};
+
+enum CmdButtonIdx {
+  CMDBUTTONIDX_MINIMIZE = 0,
+  CMDBUTTONIDX_RESTORE,
+  CMDBUTTONIDX_CLOSE,
+  CMDBUTTONIDX_BUTTONBOX
 };
 
 class nsUXThemeData {
@@ -51,10 +67,26 @@ class nsUXThemeData {
     void Close();
   };
 
+  static HMODULE sThemeDLL;
   static ThemeHandle sThemes[eUXNumClasses];
+
+  // We initialize sCommandButtonBoxMetrics separately as a performance
+  // optimization to avoid fetching dummy values for sCommandButtonMetrics
+  // when we don't need those.
+  static SIZE sCommandButtonMetrics[3];
+  static bool sCommandButtonMetricsInitialized;
+  static SIZE sCommandButtonBoxMetrics;
+  static bool sCommandButtonBoxMetricsInitialized;
+
   static const wchar_t* GetClassName(nsUXThemeClass);
+  static void EnsureCommandButtonMetrics();
+  static void EnsureCommandButtonBoxMetrics();
 
  public:
+  static const wchar_t kThemeLibraryName[];
+  static bool sTitlebarInfoPopulatedAero;
+  static bool sTitlebarInfoPopulatedThemed;
+  static bool sIsDefaultWindowsTheme;
   static bool sIsHighContrastOn;
 
   static void Invalidate();
@@ -62,6 +94,10 @@ class nsUXThemeData {
   static HMODULE GetThemeDLL();
 
   static void UpdateNativeThemeInfo();
-  static bool IsHighContrastOn() { return sIsHighContrastOn; }
+  static bool IsDefaultWindowTheme();
+  static bool IsHighContrastOn();
+
+  static bool AreFlatMenusEnabled();
+  static bool IsAppThemed();
 };
 #endif  // __UXThemeData_h__
