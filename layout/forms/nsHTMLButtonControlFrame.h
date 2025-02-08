@@ -11,6 +11,7 @@
 #include "nsContainerFrame.h"
 #include "nsCSSRenderingBorders.h"
 #include "nsIFormControlFrame.h"
+#include "nsButtonFrameRenderer.h"
 
 class gfxContext;
 class nsPresContext;

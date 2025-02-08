@@ -2902,21 +2902,6 @@ HRGN nsWindow::ExcludeNonClientFromPaintRegion(HRGN aRegion) {
  * Sets the window background paint color.
  *
  **************************************************************/
-void nsWindow::SetBackgroundColor(const nscolor& aColor) {
-  if (mBrush) ::DeleteObject(mBrush);
-  mBrush = ::CreateSolidBrush(NSRGB_2_COLOREF(aColor));
-  if (mWnd != nullptr) {
-    ::SetClassLongPtrW(mWnd, GCLP_HBRBACKGROUND, (LONG_PTR)mBrush);
-  }
-}
-
-/**************************************************************
- *
- * SECTION: nsIWidget::SetBackgroundColor
- *
- * Sets the window background paint color.
- *
- **************************************************************/
 
 void nsWindow::SetBackgroundColor(const nscolor& aColor) {
   if (mBrush) ::DeleteObject(mBrush);

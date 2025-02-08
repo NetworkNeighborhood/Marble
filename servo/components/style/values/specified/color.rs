@@ -328,11 +328,6 @@ pub enum SystemColor {
     /// Communications rebar text.
     MozWinCommunicationstext,
 
-    /// Media rebar text.
-    MozWinMediatext,
-    /// Communications rebar text.
-    MozWinCommunicationstext,
-
     /// Hyperlink color extracted from the system, not affected by the browser.anchor_color user
     /// pref.
     ///

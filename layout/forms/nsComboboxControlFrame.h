@@ -23,6 +23,7 @@
 #define NS_SKIP_NOTIFY_INDEX -2
 
 #include "mozilla/Attributes.h"
+#include "nsBlockFrame.h"
 #include "nsIFormControlFrame.h"
 #include "nsIAnonymousContentCreator.h"
 #include "nsISelectControlFrame.h"
@@ -98,11 +99,35 @@ class nsComboboxControlFrame final : public nsBlockFrame,
 #ifdef DEBUG_FRAME_DUMP
   nsresult GetFrameName(nsAString& aResult) const final;
 #endif
+  void Destroy(DestroyContext&) final;
+
+  void SetInitialChildList(ChildListID aListID, nsFrameList&& aChildList) final;
+  const nsFrameList& GetChildList(ChildListID aListID) const final;
+  void GetChildLists(nsTArray<ChildList>* aLists) const final;
+
+  nsContainerFrame* GetContentInsertionFrame() final;
+
+  // Return the dropdown and display frame.
+  void AppendDirectlyOwnedAnonBoxes(nsTArray<OwnedAnonBox>& aResult) final;
 
   // nsIFormControlFrame
   nsresult SetFormProperty(nsAtom* aName, const nsAString& aValue) final {
     return NS_OK;
   }
+
+  /**
+   * Inform the control that it got (or lost) focus.
+   * If it lost focus, the dropdown menu will be rolled up if needed,
+   * and FireOnChange() will be called.
+   * @param aOn true if got focus, false if lost focus.
+   * @param aRepaint if true then force repaint (NOTE: we always force repaint
+   *        currently)
+   * @note This method might destroy |this|.
+   */
+  MOZ_CAN_RUN_SCRIPT_BOUNDARY
+  void SetFocus(bool aOn, bool aRepaint) final;
+
+  int32_t GetIndexOfDisplayArea();
 
   /**
    * @note This method might destroy |this|.

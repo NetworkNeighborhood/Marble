@@ -93,6 +93,17 @@ class nsUXThemeData {
   static HANDLE GetTheme(nsUXThemeClass cls);
   static HMODULE GetThemeDLL();
 
+  // nsWindow calls this to update desktop settings info
+  static void UpdateTitlebarInfo(HWND aWnd);
+
+  static SIZE GetCommandButtonMetrics(CmdButtonIdx aMetric) {
+    EnsureCommandButtonMetrics();
+    return sCommandButtonMetrics[aMetric];
+  }
+  static SIZE GetCommandButtonBoxMetrics() {
+    EnsureCommandButtonBoxMetrics();
+    return sCommandButtonBoxMetrics;
+  }
   static void UpdateNativeThemeInfo();
   static bool IsDefaultWindowTheme();
   static bool IsHighContrastOn();

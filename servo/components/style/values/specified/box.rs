@@ -1651,11 +1651,11 @@ pub enum Appearance {
     Treeview,
 
     /// Vista Rebars.
-    #[parse(condition = "ParserContext::in_ua_or_chrome_sheet")]
+    #[parse(condition = "ParserContext::chrome_rules_enabled")]
     MozWinCommunicationsToolbox,
-    #[parse(condition = "ParserContext::in_ua_or_chrome_sheet")]
+    #[parse(condition = "ParserContext::chrome_rules_enabled")]
     MozWinMediaToolbox,
-    #[parse(condition = "ParserContext::in_ua_or_chrome_sheet")]
+    #[parse(condition = "ParserContext::chrome_rules_enabled")]
     MozWinBrowsertabbarToolbox,
 
     /// Mac help button.
