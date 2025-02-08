@@ -84,18 +84,18 @@
     }
   }
   
-  /* Add a fog for background tabs to be visible on Windows 7 glass window background */
-  @media (-moz-platform: windows) {
-    @media (-moz-windows-default-theme) {
+ /* Add a fog for background tabs to be visible on Windows 7 glass window background */
+ @media (-moz-platform: windows) {
+   @media (-moz-windows-default-theme) {
+    @media (-moz-windows-glass) {
       #TabsToolbar:not([lwtheme]) {
         background-image: radial-gradient(ellipse at bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.5) 40%, transparent);
       }
     }
-  }
+   }
+ }
 
- @media not (-moz-windows-compositor),
-        not (-moz-windows-default-theme),
-        (-moz-windows-modern) {
+ @media (-moz-windows-modern) {
    /* Please keep the menu text colors in this media block in sync with
     * light-dark-overrides.css, minus the :not([lwtheme]) condition - see Bug 1165718.
     */
@@ -152,6 +152,13 @@
 @media (-moz-windows-classic) {
   :root[tabsintitlebar][sizemode="normal"] #toolbar-menubar {
     margin-top: 4px;
+  }
+}
+
+/* Set appearance to none when modern mode is on! (nicer default non-native theme) */
+@media (-moz-windows-modern) {
+  :root[tabsintitlebar][sizemode="maximized"] #titlebar {
+    appearance: none;
   }
 }
 

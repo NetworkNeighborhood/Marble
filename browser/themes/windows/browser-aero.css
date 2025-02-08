@@ -239,7 +239,7 @@
       }
     }
   
-    @media (-moz-platform: windows) {
+    @media not (-moz-windows-modern) {
       :root {
         background-color: transparent;
         appearance: auto;
