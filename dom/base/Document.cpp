@@ -13780,8 +13780,7 @@ already_AddRefed<nsDOMCaretPosition> Document::CaretPositionFromPoint(
     node = ptFrame->GetContent();
     nsIContent* nonanon = node->FindFirstNonChromeOnlyAccessContent();
     HTMLTextAreaElement* textArea = HTMLTextAreaElement::FromNode(nonanon);
-    nsITextControlFrame* textFrame =
-        do_QueryFrame(nonChrome->AsContent()->GetPrimaryFrame());
+    nsITextControlFrame* textFrame = do_QueryFrame(nonanon->GetPrimaryFrame());
     if (textFrame) {
       // If the anonymous content node has a child, then we need to make sure
       // that we get the appropriate child, as otherwise the offset may not be
