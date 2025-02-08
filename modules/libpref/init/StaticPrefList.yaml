@@ -16449,6 +16449,12 @@
   value: false
   mirror: always
 
+# Whether enable windows fog for style
+- name: widget.windows-style.show-fog
+  type: bool
+  value: false
+  mirror: always
+
 # Global user preference for disabling native theme in content processes.
 #
 # NOTE(emilio): When changing this make sure to update the non_native_theme

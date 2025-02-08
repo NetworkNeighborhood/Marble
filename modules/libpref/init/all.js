@@ -439,7 +439,7 @@ pref("gfx.content.azure.backends", "skia");
 
 #ifdef XP_WIN
   pref("gfx.webrender.flip-sequential", false);
-  pref("gfx.webrender.dcomp-win.enabled", true);
+  pref("gfx.webrender.dcomp-win.enabled", false);
   pref("gfx.webrender.triple-buffering.enabled", true);
 #endif
 

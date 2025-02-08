@@ -536,6 +536,16 @@ nsresult nsLookAndFeel::NativeGetInt(IntID aID, int32_t& aResult) {
       aResult = 0;
       break;
     }
+    case IntID::WindowsFog: {
+      int reportingPref =
+          StaticPrefs::widget_windows_style_show_fog();
+      if (reportingPref != 0) {
+        aResult = (reportingPref == 1) ? 1 : 0;
+        break;
+      }
+      aResult = 0;
+      break;
+    }
     case IntID::AlertNotificationOrigin:
       aResult = 0;
       {

@@ -153,6 +153,7 @@ static const char sIntPrefs[][45] = {
     "ui.windowsClassic",
     "ui.windowsGlass",
     "ui.windowsModern",
+    "ui.windowsFog",
     "ui.macBigSurTheme",
     "ui.macRTL",
     "ui.macTitlebarHeight",

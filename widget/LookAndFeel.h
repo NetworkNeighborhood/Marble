@@ -147,6 +147,15 @@ class LookAndFeel {
     WindowsModern,
 
     /*
+     * A Boolean value to determine whether to enable the custom Windows fog
+     * for aero looks
+     *
+     * This is Windows-specific and is not implemented on other platforms
+     * (will return the default of NS_ERROR_FAILURE).
+     */
+    WindowsFog,
+
+    /*
      * A Boolean value to determine whether the macOS Big Sur-specific
      * theming should be used.
      */
