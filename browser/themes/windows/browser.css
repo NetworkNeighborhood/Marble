@@ -88,8 +88,10 @@
  @media (-moz-platform: windows) {
    @media (-moz-windows-default-theme) {
     @media (-moz-windows-glass) {
-      #TabsToolbar:not([lwtheme]) {
-        background-image: radial-gradient(ellipse at bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.5) 40%, transparent);
+      @media (-moz-windows-fog) {
+        #TabsToolbar:not([lwtheme]) {
+          background-image: radial-gradient(ellipse at bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.5) 40%, transparent);
+        }
       }
     }
    }
