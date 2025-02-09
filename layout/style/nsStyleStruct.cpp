@@ -542,7 +542,8 @@ nsChangeHint nsStyleBorder::CalcDifference(
 }
 
 nsStyleOutline::nsStyleOutline()
-    : mOutlineWidth(kMediumBorderWidth),
+    : mOutlineRadius(ZeroBorderRadius()),
+      mOutlineWidth(kMediumBorderWidth),
       mOutlineOffset({0.0f}),
       mOutlineColor(StyleColor::CurrentColor()),
       mOutlineStyle(StyleOutlineStyle::BorderStyle(StyleBorderStyle::None)),
@@ -551,7 +552,8 @@ nsStyleOutline::nsStyleOutline()
 }
 
 nsStyleOutline::nsStyleOutline(const nsStyleOutline& aSrc)
-    : mOutlineWidth(aSrc.mOutlineWidth),
+    : mOutlineRadius(aSrc.mOutlineRadius),
+      mOutlineWidth(aSrc.mOutlineWidth),
       mOutlineOffset(aSrc.mOutlineOffset),
       mOutlineColor(aSrc.mOutlineColor),
       mOutlineStyle(aSrc.mOutlineStyle),
@@ -605,7 +607,8 @@ nsStyleList::nsStyleList()
     : mListStylePosition(StyleListStylePosition::Outside),
       mListStyleType(StyleCounterStyle::Name({StyleAtom(nsGkAtoms::disc)})),
       mQuotes(StyleQuotes::Auto()),
-      mListStyleImage(StyleImage::None()) {
+      mListStyleImage(StyleImage::None()),
+      mImageRegion(StyleClipRectOrAuto::Auto()) {
   MOZ_COUNT_CTOR(nsStyleList);
   MOZ_ASSERT(NS_IsMainThread());
 }
@@ -614,7 +617,8 @@ nsStyleList::nsStyleList(const nsStyleList& aSource)
     : mListStylePosition(aSource.mListStylePosition),
       mListStyleType(aSource.mListStyleType),
       mQuotes(aSource.mQuotes),
-      mListStyleImage(aSource.mListStyleImage) {
+      mListStyleImage(aSource.mListStyleImage),
+      mImageRegion(aSource.mImageRegion) {
   MOZ_COUNT_CTOR(nsStyleList);
 }
 

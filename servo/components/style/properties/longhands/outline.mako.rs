@@ -38,6 +38,20 @@ ${helpers.predefined_type(
     affects="overflow",
 )}
 
+// The -moz-outline-radius-* properties are non-standard and not on a standards track.
+% for corner in ["topleft", "topright", "bottomright", "bottomleft"]:
+    ${helpers.predefined_type(
+        "-moz-outline-radius-" + corner,
+        "BorderCornerRadius",
+        "computed::BorderCornerRadius::zero()",
+        engines="gecko",
+        boxed=True,
+        animation_value_type="discrete",
+        spec="Nonstandard (https://developer.mozilla.org/en-US/docs/Web/CSS/-moz-outline-radius)",
+        affects="paint",
+    )}
+% endfor
+
 ${helpers.predefined_type(
     "outline-offset",
     "Length",
