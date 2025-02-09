@@ -60,6 +60,10 @@
   }
 }
 
+#detailsBox {
+  margin-top: 10px;
+}
+
 #clientBox {
   flex: 1 0 auto;
   padding: 10px 0 15px;
@@ -112,6 +116,7 @@
 }
 
 #updateDeck {
+  font-style: italic;
   align-items: center;
 
   description {
