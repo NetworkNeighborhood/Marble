@@ -1741,6 +1741,10 @@ RENDER_AGAIN:
       InflateRect(&widgetRect, -1, -1);
       ::FillRect(hdc, &widgetRect, reinterpret_cast<HBRUSH>(COLOR_BTNFACE + 1));
     }
+  else if (aAppearance == StyleAppearance::Resizer ||
+           aAppearance == StyleAppearance::MozMenulistArrowButton) {
+    DrawThemeBGRTLAware(theme, hdc, part, state, &widgetRect, &clipRect,
+                        IsFrameRTL(aFrame));
   } else if (aAppearance == StyleAppearance::ProgressBar) {
     // DrawThemeBackground renders each corner with a solid white pixel.
     // Restore these pixels to the underlying color. Tracks are rendered
