@@ -159,7 +159,7 @@
   display: grid;
 }
 
-#updateIcon {
+#icons {
   display: none;
   align-self: center;
   grid-row-start: 1;
