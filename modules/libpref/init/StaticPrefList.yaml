@@ -1621,6 +1621,12 @@
   mirror: always
   rust: true
 
+# Enable Proton restyle. Requires restart.
+- name: browser.proton.enabled
+  type: bool
+  value: false
+  mirror: always
+
 # Blocked plugin content
 - name: browser.safebrowsing.blockedURIs.enabled
   type: bool

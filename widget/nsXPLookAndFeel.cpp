@@ -500,12 +500,17 @@ bool LookAndFeel::WindowsNonNativeMenusEnabled() {
   }
 }
 
+bool LookAndFeel::ProtonThemeEnabled() {
+  return StaticPrefs::browser_proton_enabled();
+}
+
 static constexpr struct {
   nsLiteralCString mName;
   widget::ThemeChangeKind mChangeKind =
       widget::ThemeChangeKind::MediaQueriesOnly;
 } kMediaQueryPrefs[] = {
     {"browser.display.windows.non_native_menus"_ns},
+    {"browser.proton.enabled"_ns},
     // Affects whether standins are used for the accent color.
     {"widget.non-native-theme.use-theme-accent"_ns,
      widget::ThemeChangeKind::Style},
