@@ -592,6 +592,8 @@ struct MOZ_NEEDS_MEMMOVABLE_MEMBERS nsStyleOutline {
   STYLE_STRUCT(nsStyleOutline)
   nsStyleOutline();
 
+  mozilla::StyleBorderRadius mOutlineRadius;
+
   // This is the specified value of outline-width, but with length values
   // computed to absolute.  mActualOutlineWidth stores the outline-width
   // value used by layout.  (We must store mOutlineWidth for the same
@@ -638,11 +640,21 @@ struct MOZ_NEEDS_MEMMOVABLE_MEMBERS nsStyleList {
 
   already_AddRefed<nsIURI> GetListStyleImageURI() const;
 
+  nsRect GetImageRegion() const {
+    if (!mImageRegion.IsRect()) {
+      return nsRect();
+    }
+    return mImageRegion.AsRect().ToLayoutRect(0);
+  }
+
   mozilla::StyleListStylePosition mListStylePosition;
 
   mozilla::StyleListStyleType mListStyleType;
   mozilla::StyleQuotes mQuotes;
   mozilla::StyleImage mListStyleImage;
+
+  // the rect to use within an image.
+  mozilla::StyleClipRectOrAuto mImageRegion;
 };
 
 struct MOZ_NEEDS_MEMMOVABLE_MEMBERS nsStylePage {
@@ -1745,7 +1757,6 @@ struct MOZ_NEEDS_MEMMOVABLE_MEMBERS nsStyleUI {
   void TriggerImageLoads(mozilla::dom::Document&, const nsStyleUI*);
 
   mozilla::StyleInert mInert;
-  mozilla::StyleMozTheme mMozTheme;
 
  private:
   mozilla::StyleUserInput mUserInput;

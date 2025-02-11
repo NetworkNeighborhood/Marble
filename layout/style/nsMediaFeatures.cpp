@@ -94,8 +94,21 @@ static nsSize GetDeviceSize(const Document& aDocument) {
   return size;
 }
 
+bool Gecko_MediaFeatures_WindowsNonNativeMenus(const Document* aDocument) {
+  return LookAndFeel::WindowsNonNativeMenusEnabled() ||
+         aDocument->ShouldAvoidNativeTheme();
+}
+
+bool Gecko_MediaFeatures_ShouldUseProton(const Document* aDocument) {
+  return LookAndFeel::ProtonThemeEnabled();
+}
+
 bool Gecko_MediaFeatures_IsResourceDocument(const Document* aDocument) {
   return aDocument->IsResourceDoc();
+}
+
+bool Gecko_MediaFeatures_ShouldAvoidNativeTheme(const Document* aDocument) {
+  return aDocument->ShouldAvoidNativeTheme();
 }
 
 bool Gecko_MediaFeatures_UseOverlayScrollbars(const Document* aDocument) {

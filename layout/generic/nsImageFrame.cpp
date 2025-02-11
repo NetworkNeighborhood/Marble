@@ -555,17 +555,23 @@ void nsImageFrame::DidSetComputedStyle(ComputedStyle* aOldStyle) {
   //
   // TODO(emilio): We might want to do the same for regular list-style-image or
   // even simple content: url() changes.
-  if (mKind == Kind::XULImage && aOldStyle) {
-    if (!mContent->AsElement()->HasNonEmptyAttr(nsGkAtoms::src) &&
-        aOldStyle->StyleList()->mListStyleImage !=
-            StyleList()->mListStyleImage) {
-      UpdateXULImage();
-    }
-    // If we have no image our intrinsic size might be themed. We need to
-    // update the size even if the effective appearance hasn't changed to
-    // deal correctly with theme changes.
-    if (!mOwnedRequest) {
-      UpdateIntrinsicSize();
+  if (mKind == Kind::XULImage) {
+    // Fetch the subrect used for clipping the image:
+    // Because this is only set from within here, subrects don't work at all
+    // outside of <xul:image> elements, so they don't affect web content.
+    mSubRect = StyleList()->GetImageRegion();
+    if (aOldStyle) {
+      if (!mContent->AsElement()->HasNonEmptyAttr(nsGkAtoms::src) &&
+          aOldStyle->StyleList()->mListStyleImage !=
+              StyleList()->mListStyleImage) {
+        UpdateXULImage();
+      }
+      // If we have no image our intrinsic size might be themed. We need to
+      // update the size even if the effective appearance hasn't changed to
+      // deal correctly with theme changes.
+      if (!mOwnedRequest) {
+        UpdateIntrinsicSize();
+      }
     }
   }
 
@@ -596,6 +602,14 @@ void nsImageFrame::DidSetComputedStyle(ComputedStyle* aOldStyle) {
                                StylePosition()->mAspectRatio) {
     UpdateIntrinsicRatio();
   }
+}
+
+bool nsImageFrame::CanOptimizeToImageLayer() {
+  bool hasSubRect = (mSubRect.width > 0 || mSubRect.height > 0);
+  if (hasSubRect) {
+    return false;
+  }
+  return true;
 }
 
 static bool SizeIsAvailable(imgIRequest* aRequest) {
@@ -2302,7 +2316,7 @@ bool nsDisplayImage::CreateWebRenderCommands(
   MOZ_ASSERT(mFrame->IsImageFrame() || mFrame->IsImageControlFrame());
   // Image layer doesn't support draw focus ring for image map.
   auto* frame = static_cast<nsImageFrame*>(mFrame);
-  if (frame->HasImageMap()) {
+  if (frame->HasImageMap() || !frame->CanOptimizeToImageLayer()) {
     return false;
   }
 
@@ -2421,10 +2435,12 @@ ImgDrawResult nsImageFrame::PaintImage(gfxContext& aRenderingContext,
   SVGImageContext svgContext;
   SVGImageContext::MaybeStoreContextPaint(svgContext, this, aImage);
 
+  bool hasSubrect = (mSubRect.width > 0 || mSubRect.height || 0);
+
   ImgDrawResult result = nsLayoutUtils::DrawSingleImage(
       aRenderingContext, PresContext(), aImage,
       nsLayoutUtils::GetSamplingFilterForFrame(this), dest, aDirtyRect,
-      svgContext, aFlags, &anchorPoint);
+      svgContext, aFlags, &anchorPoint, hasSubrect ? &mSubRect : nullptr);
 
   if (nsImageMap* map = GetImageMap()) {
     gfxPoint devPixelOffset = nsLayoutUtils::PointToGfxPoint(

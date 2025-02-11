@@ -3310,8 +3310,11 @@ void nsLayoutUtils::PaintFrame(gfxContext* aRenderingContext, nsIFrame* aFrame,
   // glass boundaries on Windows. Also set up the window dragging region.
   if ((aFlags & PaintFrameFlags::WidgetLayers) &&
       !(aFlags & PaintFrameFlags::DocumentRelative)) {
-    if (nsIWidget* widget = aFrame->GetNearestWidget()) {
-      const nsRegion& opaqueRegion = builder->GetWindowOpaqueRegion();
+    nsIWidget* widget = aFrame->GetNearestWidget();
+    if (widget) {
+      nsRegion opaqueRegion;
+      opaqueRegion.And(builder->GetWindowExcludeGlassRegion(),
+                       builder->GetWindowOpaqueRegion());
       widget->UpdateOpaqueRegion(LayoutDeviceIntRegion::FromUnknownRegion(
           opaqueRegion.ToNearestPixels(presContext->AppUnitsPerDevPixel())));
       widget->UpdateWindowDraggingRegion(builder->GetWindowDraggingRegion());
@@ -6337,7 +6340,7 @@ ImgDrawResult nsLayoutUtils::DrawSingleImage(
     gfxContext& aContext, nsPresContext* aPresContext, imgIContainer* aImage,
     SamplingFilter aSamplingFilter, const nsRect& aDest, const nsRect& aDirty,
     const SVGImageContext& aSVGContext, uint32_t aImageFlags,
-    const nsPoint* aAnchorPoint) {
+    const nsPoint* aAnchorPoint, const nsRect* aSourceArea) {
   // NOTE(emilio): We can hardcode resolution to 1 here, since we're interested
   // in the actual image pixels, for snapping purposes, not on the adjusted
   // size.
@@ -6349,8 +6352,25 @@ ImgDrawResult nsLayoutUtils::DrawSingleImage(
     return ImgDrawResult::SUCCESS;  // no point in drawing a zero size image
   }
 
-  const nsSize imageSize(CSSPixel::ToAppUnits(pixelImageSize));
-  const nsRect source(nsPoint(), imageSize);
+  nscoord appUnitsPerCSSPixel = AppUnitsPerCSSPixel();
+  nsSize imageSize(CSSPixel::ToAppUnits(pixelImageSize));
+  nsRect source;
+  nsCOMPtr<imgIContainer> image;
+  if (aSourceArea) {
+    source = *aSourceArea;
+    nsIntRect subRect(source.x, source.y, source.width, source.height);
+    subRect.ScaleInverseRoundOut(appUnitsPerCSSPixel);
+    image = ImageOps::Clip(aImage, subRect);
+    nsRect imageRect;
+    imageRect.SizeTo(imageSize);
+    nsRect clippedSource = imageRect.Intersect(source);
+    source -= clippedSource.TopLeft();
+    imageSize = clippedSource.Size();
+  } else {
+    source.SizeTo(imageSize);
+    image = aImage;
+  }
+
   const nsRect dest = GetWholeImageDestination(imageSize, source, aDest);
 
   // Ensure that only a single image tile is drawn. If aSourceArea extends
@@ -6358,7 +6378,7 @@ ImgDrawResult nsLayoutUtils::DrawSingleImage(
   // transform but we don't want to actually tile the image.
   nsRect fill;
   fill.IntersectRect(aDest, dest);
-  return DrawImageInternal(aContext, aPresContext, aImage, aSamplingFilter,
+  return DrawImageInternal(aContext, aPresContext, image, aSamplingFilter,
                            dest, fill,
                            aAnchorPoint ? *aAnchorPoint : fill.TopLeft(),
                            aDirty, aSVGContext, aImageFlags);
@@ -6752,6 +6772,12 @@ widget::TransparencyMode nsLayoutUtils::GetFrameTransparency(
     nsIFrame* aBackgroundFrame, nsIFrame* aCSSRootFrame) {
   if (!aCSSRootFrame->StyleEffects()->IsOpaque()) {
     return TransparencyMode::Transparent;
+  }
+
+  StyleAppearance appearance =
+      aCSSRootFrame->StyleDisplay()->EffectiveAppearance();
+  if (appearance == StyleAppearance::MozWinBorderlessGlass) {
+    return TransparencyMode::BorderlessGlass;
   }
 
   if (HasNonZeroCorner(aCSSRootFrame->StyleBorder()->mBorderRadius)) {

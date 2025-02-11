@@ -424,6 +424,7 @@
 #include "nsStringIterator.h"
 #include "nsStyleSheetService.h"
 #include "nsStyleStruct.h"
+#include "nsSubDocumentFrame.h"
 #include "nsTextNode.h"
 #include "nsUnicharUtils.h"
 #include "nsWrapperCache.h"
@@ -3730,6 +3731,11 @@ void Document::ApplySettingsFromCSP(bool aSpeculative) {
 nsresult Document::InitCSP(nsIChannel* aChannel) {
   MOZ_ASSERT(!mScriptGlobalObject,
              "CSP must be initialized before mScriptGlobalObject is set!");
+  if (!StaticPrefs::security_csp_enable()) {
+    MOZ_LOG(gCspPRLog, LogLevel::Debug,
+            ("CSP is disabled, skipping CSP init for document %p", this));
+    return NS_OK;
+  }
 
   // If this is a data document - no need to set CSP.
   if (mLoadedAsData) {
@@ -18919,7 +18925,8 @@ void Document::AddPendingFrameStaticClone(nsFrameLoaderOwner* aElement,
 }
 
 bool Document::ShouldAvoidNativeTheme() const {
-  return !IsInChromeDocShell() || XRE_IsContentProcess();
+  return StaticPrefs::widget_non_native_theme_enabled() &&
+         (!IsInChromeDocShell() || XRE_IsContentProcess());
 }
 
 bool Document::UseRegularPrincipal() const {

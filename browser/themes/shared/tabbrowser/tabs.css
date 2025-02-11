@@ -251,27 +251,27 @@
 
 .tab-throbber {
   &:not([busy]) {
-    display: none;
+      display: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    background-image: url("chrome://global/skin/icons/loading.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    -moz-context-properties: fill;
-    fill: currentColor;
-    opacity: 0.4;
+    @media (prefers-reduced-motion: reduce) {
+      background-image: url("chrome://global/skin/icons/hourglass.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      -moz-context-properties: fill;
+      fill: currentColor;
+      opacity: 0.4;
 
-    &[progress] {
-      opacity: 0.8;
+      &[progress] {
+        opacity: 0.8;
+      }
     }
-  }
 
-  @media (prefers-reduced-motion: no-preference) {
-    :root[sessionrestored] & {
-      &[busy] {
-        position: relative;
-        overflow: hidden;
+    @media (prefers-reduced-motion: no-preference) {
+      :root[sessionrestored] & {
+        &[busy] {
+          position: relative;
+          overflow: hidden;
 
         &::before {
           content: "";
@@ -285,10 +285,10 @@
           -moz-context-properties: fill;
 
           /* XXX: It would be nice to transition between the "connecting" color and the
-             "loading" color (see the `[progress]::before` rule below);
-             however, that currently forces main thread painting. When this is fixed
-             (after WebRender lands), we can do something like
-             `transition: fill 0.333s, opacity 0.333s;` */
+              "loading" color (see the `[progress]::before` rule below);
+              however, that currently forces main thread painting. When this is fixed
+              (after WebRender lands), we can do something like
+              `transition: fill 0.333s, opacity 0.333s;` */
 
           fill: currentColor;
           opacity: 0.7;
@@ -930,7 +930,7 @@ toolbar:not(#TabsToolbar) #firefox-view-button {
 
   @media (prefers-reduced-motion: reduce) {
     &[busy] {
-      list-style-image: url("chrome://global/skin/icons/loading.svg");
+      list-style-image: url("chrome://global/skin/icons/hourglass.svg");
       -moz-context-properties: fill;
       fill: currentColor;
       opacity: 0.4;

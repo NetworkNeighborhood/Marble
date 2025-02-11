@@ -825,10 +825,6 @@ pref("browser.dataFeatureRecommendations.enabled", false);
 // sets darkTheme data.
 pref("browser.theme.dark-private-windows", true);
 
-// Pref to control whether or not Private Browsing windows show up
-// as separate icons in the Windows taskbar.
-pref("browser.privateWindowSeparation.enabled", true);
-
 // Controls visibility of the privacy segmentation preferences section.
 pref("browser.privacySegmentation.preferences.show", false);
 
@@ -1224,6 +1220,7 @@ pref("browser.preferences.moreFromMozilla", true);
 pref("browser.preferences.experimental.hidden", false);
 pref("browser.preferences.defaultPerformanceSettings.enabled", true);
 
+pref("browser.proton.enabled", false);
 pref("browser.proton.toolbar.version", 0);
 
 // Backspace and Shift+Backspace behavior

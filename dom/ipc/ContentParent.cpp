@@ -2720,7 +2720,9 @@ bool ContentParent::BeginSubprocessLaunch(ProcessPriority aPriority) {
 
 #ifdef MOZ_WIDGET_GTK
   // This is X11-only pending a solution for WebGL in Wayland mode.
-  if (StaticPrefs::dom_ipc_avoid_gtk() && widget::GdkIsX11Display()) {
+  if (StaticPrefs::dom_ipc_avoid_gtk() &&
+      StaticPrefs::widget_non_native_theme_enabled() &&
+      widget::GdkIsX11Display()) {
     mSubprocess->SetEnv("MOZ_HEADLESS", "1");
   }
 #endif
@@ -5623,8 +5625,15 @@ mozilla::ipc::IPCResult ContentParent::CommonCreateWindow(
   }
 
   // If we haven't found a chrome window to open in, just use the most recently
-  // opened one.
+  // opened non PBM window.
   if (!outerWin) {
+    // The parent was a private window but it's no longer available.
+    if (aOriginAttributes.mPrivateBrowsingId !=
+        nsIScriptSecurityManager::DEFAULT_PRIVATE_BROWSING_ID) {
+      aResult = NS_ERROR_FAILURE;
+      return IPC_OK();
+    }
+
     outerWin = nsContentUtils::GetMostRecentNonPBWindow();
     if (NS_WARN_IF(!outerWin)) {
       aResult = NS_ERROR_FAILURE;

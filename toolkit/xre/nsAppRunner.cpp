@@ -788,6 +788,11 @@ nsIXULRuntime::ContentWin32kLockdownState GetLiveWin32kLockdownState() {
     }
   }
 
+  // Non-native theming is required as well
+  if (!StaticPrefs::widget_non_native_theme_enabled()) {
+    return nsIXULRuntime::ContentWin32kLockdownState::MissingNonNativeTheming;
+  }
+
   // Win32k Lockdown requires Remote WebGL, but it may be disabled on
   // certain hardware or virtual machines.
   if (!gfx::gfxVars::AllowWebglOop() || !StaticPrefs::webgl_out_of_process()) {
@@ -2143,7 +2148,7 @@ static void DumpHelp() {
       "  --dbus-service <launcher>  Run as DBus service for "
       "org.freedesktop.Application and\n"
       "                             set a launcher (usually /usr/bin/appname "
-      "script) for it.");
+      "script) for it.\n");
 #endif
 
   // this works, but only after the components have registered.  so if you drop

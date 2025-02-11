@@ -115,13 +115,11 @@ void StyleComputedUrl::ResolveImage(Document& aDocument,
                                     const StyleComputedUrl* aOldImage) {
   MOZ_DIAGNOSTIC_ASSERT(NS_IsMainThread());
 
-  StyleLoadData& data = LoadData();
+  StyleLoadData& data = MutLoadData();
 
   MOZ_ASSERT(!(data.flags & StyleLoadDataFlags::TRIED_TO_RESOLVE_IMAGE));
 
   data.flags |= StyleLoadDataFlags::TRIED_TO_RESOLVE_IMAGE;
-
-  MOZ_ASSERT(NS_IsMainThread());
 
   // TODO(emilio, bug 1440442): This is a hackaround to avoid flickering due the
   // lack of non-http image caching in imagelib (bug 1406134), which causes
@@ -544,7 +542,8 @@ nsChangeHint nsStyleBorder::CalcDifference(
 }
 
 nsStyleOutline::nsStyleOutline()
-    : mOutlineWidth(kMediumBorderWidth),
+    : mOutlineRadius(ZeroBorderRadius()),
+      mOutlineWidth(kMediumBorderWidth),
       mOutlineOffset({0.0f}),
       mOutlineColor(StyleColor::CurrentColor()),
       mOutlineStyle(StyleOutlineStyle::BorderStyle(StyleBorderStyle::None)),
@@ -553,7 +552,8 @@ nsStyleOutline::nsStyleOutline()
 }
 
 nsStyleOutline::nsStyleOutline(const nsStyleOutline& aSrc)
-    : mOutlineWidth(aSrc.mOutlineWidth),
+    : mOutlineRadius(aSrc.mOutlineRadius),
+      mOutlineWidth(aSrc.mOutlineWidth),
       mOutlineOffset(aSrc.mOutlineOffset),
       mOutlineColor(aSrc.mOutlineColor),
       mOutlineStyle(aSrc.mOutlineStyle),
@@ -607,7 +607,8 @@ nsStyleList::nsStyleList()
     : mListStylePosition(StyleListStylePosition::Outside),
       mListStyleType(StyleCounterStyle::Name({StyleAtom(nsGkAtoms::disc)})),
       mQuotes(StyleQuotes::Auto()),
-      mListStyleImage(StyleImage::None()) {
+      mListStyleImage(StyleImage::None()),
+      mImageRegion(StyleClipRectOrAuto::Auto()) {
   MOZ_COUNT_CTOR(nsStyleList);
   MOZ_ASSERT(NS_IsMainThread());
 }
@@ -616,7 +617,8 @@ nsStyleList::nsStyleList(const nsStyleList& aSource)
     : mListStylePosition(aSource.mListStylePosition),
       mListStyleType(aSource.mListStyleType),
       mQuotes(aSource.mQuotes),
-      mListStyleImage(aSource.mListStyleImage) {
+      mListStyleImage(aSource.mListStyleImage),
+      mImageRegion(aSource.mImageRegion) {
   MOZ_COUNT_CTOR(nsStyleList);
 }
 
@@ -2980,7 +2982,6 @@ LogicalSide nsStyleText::TextEmphasisSide(WritingMode aWM) const {
 
 nsStyleUI::nsStyleUI()
     : mInert(StyleInert::None),
-      mMozTheme(StyleMozTheme::Auto),
       mUserInput(StyleUserInput::Auto),
       mUserModify(StyleUserModify::ReadOnly),
       mUserFocus(StyleUserFocus::Normal),
@@ -2995,7 +2996,6 @@ nsStyleUI::nsStyleUI()
 
 nsStyleUI::nsStyleUI(const nsStyleUI& aSource)
     : mInert(aSource.mInert),
-      mMozTheme(aSource.mMozTheme),
       mUserInput(aSource.mUserInput),
       mUserModify(aSource.mUserModify),
       mUserFocus(aSource.mUserFocus),
@@ -3061,7 +3061,6 @@ nsChangeHint nsStyleUI::CalcDifference(const nsStyleUI& aNewData) const {
   if (mCaretColor != aNewData.mCaretColor ||
       mAccentColor != aNewData.mAccentColor ||
       mScrollbarColor != aNewData.mScrollbarColor ||
-      mMozTheme != aNewData.mMozTheme ||
       mColorScheme != aNewData.mColorScheme) {
     hint |= nsChangeHint_RepaintFrame;
   }
