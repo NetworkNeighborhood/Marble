@@ -41,6 +41,20 @@ export const BuiltInThemeConfig = new Map([
     },
   ],
   [
+    "marble-canica@mozilla.org",
+    {
+      version: "1.0",
+      path: "resource://builtin-themes/canica/",
+    },
+  ],
+  [
+    "marble-doukyuusei@mozilla.org",
+    {
+      version: "1.0",
+      path: "resource://builtin-themes/doukyuusei/",
+    },
+  ],
+  [
     "2022red-colorway@mozilla.org",
     {
       version: "1.1",
