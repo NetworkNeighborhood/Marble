@@ -57,7 +57,7 @@
    --browser-stack-z-index-devtools-splitter: 1;
    --browser-stack-z-index-dialog-stack: 2;
    --browser-stack-z-index-rdm-toolbar: 3;
- 
+
    --toolbox-non-lwt-bgcolor: -moz-headerbar;
    --toolbox-non-lwt-textcolor: -moz-headerbartext;
    --toolbox-non-lwt-bgcolor-inactive: -moz-headerbarinactive;
@@ -330,7 +330,7 @@
      display: none;
    }
  }
- 
+
  /* Menu bar */
  
  #toolbar-menubar {

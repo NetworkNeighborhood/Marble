@@ -317,6 +317,14 @@
         border-top-color: var(--glass-inactive-border-color);
       }
     }
+
+    /* Force z-index one on navigator-toolbox (hack). 
+      * This is to avoid a problem where the caption buttons clipping mask don't show up anywhere. */
+    #main-window[lwtheme] {
+      #navigator-toolbox {
+        z-index: 2 !important;
+      }
+    }
   }
   
   /* Aero Basic */
