@@ -108,6 +108,23 @@
    :root[tabsintitlebar]:not([lwtheme]):-moz-window-inactive {
      color: InactiveCaptionText;
    }
+
+   @media not (-moz-proton) {
+    :root[tabsintitlebar]:not([lwtheme]) #TabsToolbar {
+        background-color: hsl(235,33%,19%);
+        @media (prefers-color-scheme: dark) {
+          background-color: rgb(12, 12, 13);
+        }
+
+        @media (-moz-windows-accent-color-in-titlebar) {
+          background-color: -moz-win-accentcolor;
+        }
+    }
+
+    :root[tabsintitlebar]:not([lwtheme]) .titlebar-button {
+      stroke: white;
+    }
+   }
  }
  
  @media (-moz-windows-classic) {

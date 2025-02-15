@@ -32,7 +32,7 @@
   }
 
   /* Black toolbar text for 7 to make stuffs visible */
-  @media (-moz-platform: windows) {
+  @media not (-moz-windows-modern) {
     @media (-moz-windows-default-theme), (-moz-windows-compositor) {
       #TabsToolbar {
         color: black;
@@ -44,20 +44,22 @@
     }
   }
 
-  @media (-moz-windows-glass) {
-    /* Make the menubar text readable on aero glass (copied from browser-aero.css). */
-    #toolbar-menubar {
-      text-shadow: 0 0 .5em white, 0 0 .5em white, 0 1px 0 rgba(255,255,255,.4);
-    }
+  @media not (-moz-windows-modern) {
+    @media (-moz-windows-glass) {
+      /* Make the menubar text readable on aero glass (copied from browser-aero.css). */
+      #toolbar-menubar {
+        text-shadow: 0 0 .5em white, 0 0 .5em white, 0 1px 0 rgba(255,255,255,.4);
+      }
 
-    #main-menubar:not(:-moz-window-inactive) {
-      background-color: rgba(255,255,255,.5);
-      color: black;
-      border-radius: 4px;
+      #main-menubar:not(:-moz-window-inactive) {
+        background-color: rgba(255,255,255,.5);
+        color: black;
+        border-radius: 4px;
+      }
     }
   }
 
-  @media (-moz-platform: windows) {
+  @media not (-moz-windows-modern) {
     @media (-moz-windows-compositor) {
       :root {
         background: transparent !important;
@@ -102,7 +104,7 @@
       background-image: none !important;
     }
   }
-  @media (-moz-windows-glass) {
+  @media not (-moz-windows-modern) {
     #navigator-toolbox {
       border-top: none !important;
       box-shadow: none !important;
