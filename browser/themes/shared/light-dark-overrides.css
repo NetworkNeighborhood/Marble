@@ -34,23 +34,47 @@
   /* Black toolbar text for 7 to make stuffs visible */
   @media not (-moz-windows-modern) {
     @media (-moz-windows-default-theme), (-moz-windows-compositor) {
-      #TabsToolbar {
-        color: black;
-        --toolbarbutton-icon-fill: currentColor;
+      @media not (-moz-proton) {
+        /* Always show light toolbar elements on aero surface. */
+        #TabsToolbar {
+          color: hsl(240,9%,98%);
+        }
+
+        /* Because we're forcing the tabs toolbar to be [brighttext] to
+        * get white toolbar button icons, we need to manually set the
+        * correct color for the tab hover state for the light theme. */
+        .tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true]):not([multiselected]):-moz-lwtheme-darktext {
+          background-color: rgba(0,0,0,.1) !important;
+        }
+        .tabbrowser-tab:hover > .tab-stack > .tab-background > .tab-line:not([selected=true]):not([multiselected]):-moz-lwtheme-darktext {
+          background-color: rgba(0,0,0,.2) !important;
+        }
       }
-      :root {
-        --lwt-text-color: black !important;
+
+      @media (-moz-proton) {
+        #TabsToolbar {
+          color: black;
+          --toolbarbutton-icon-fill: currentColor;
+        }
+        :root {
+          --lwt-text-color: black !important;
+        }
       }
     }
   }
 
   @media not (-moz-windows-modern) {
     @media (-moz-windows-glass) {
+      /* Use opaque white icons on Aero Glass. */
+      #TabsToolbar {
+        --lwt-toolbarbutton-icon-fill: white;
+      }
+    
       /* Make the menubar text readable on aero glass (copied from browser-aero.css). */
       #toolbar-menubar {
         text-shadow: 0 0 .5em white, 0 0 .5em white, 0 1px 0 rgba(255,255,255,.4);
       }
-
+    
       #main-menubar:not(:-moz-window-inactive) {
         background-color: rgba(255,255,255,.5);
         color: black;

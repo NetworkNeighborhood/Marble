@@ -5,7 +5,36 @@
 @namespace html url("http://www.w3.org/1999/xhtml");
 
 :root {
-  --tab-min-height: 36px;
+  @media (-moz-proton) {
+    --tab-min-height: 36px;
+    &[uidensity=compact] {
+      --tab-min-height: 29px;
+    }
+    &[uidensity=touch] {
+      --tab-min-height: 41px;
+    }
+
+    --inline-tab-padding: 8px;
+    --tab-border-radius: 4px;
+    --tab-shadow-max-size: 6px;
+    --tab-block-margin: 4px;
+    --tab-selected-textcolor: var(--toolbar-color);
+    --tab-selected-bgcolor: var(--toolbar-bgcolor);
+    --tab-selected-color-scheme: var(--toolbar-color-scheme);
+    &[lwt-tab-selected="light"] {
+      --tab-selected-color-scheme: light;
+    }
+    &[lwt-tab-selected="dark"] {
+      --tab-selected-color-scheme: dark;
+    }
+    --tab-selected-outline-color: currentColor;
+    --tab-hover-outline-color: currentColor;
+    &[lwtheme] {
+      --tab-selected-outline-color: var(--lwt-tab-line-color, currentColor);
+    }
+  }
+
+  --tab-min-height: 33px;
   &[uidensity=compact] {
     --tab-min-height: 29px;
   }
@@ -14,7 +43,7 @@
   }
 
   --inline-tab-padding: 8px;
-  --tab-border-radius: 4px;
+  --tab-border-radius: 0px;
   --tab-shadow-max-size: 6px;
   --tab-block-margin: 4px;
   --tab-selected-textcolor: var(--toolbar-color);
@@ -35,6 +64,8 @@
   &[lwtheme] {
     --tab-selected-outline-color: var(--lwt-tab-line-color, currentColor);
   }
+
+  --tab-line-color: highlight;
 }
 
 #tabbrowser-tabs {
@@ -961,6 +992,383 @@ toolbar:not(#TabsToolbar) #firefox-view-button {
           url("chrome://browser/skin/tabbrowser/tab-loading-inverted.png"),
           url("chrome://browser/skin/tabbrowser/tab-loading-inverted@2x.png") 2x
         );
+      }
+    }
+  }
+}
+
+/* Photon style overrides 
+   As always, taken from https://github.com/zapSNH/zapsCoolPhotonTheme/ and Firefox 78-87 ^_^
+*/
+
+@media not (-moz-proton) {
+  @media (-moz-platform: linux) {
+    .tabbrowser-tab {
+      height: calc(var(--tab-min-height) + 1px) !important;
+    }
+  }
+  #TabsToolbar-customization-target {
+    height: var(--tab-min-height) !important;
+    @media (-moz-platform: linux) {
+      height: calc(var(--tab-min-height) + 1px) !important;
+    }
+  }
+
+  /* Tab separators */
+  .titlebar-spacer[type="pre-tabs"] {
+    border-inline-end: 1px solid var(--lwt-background-tab-separator-color, currentColor);
+    opacity: 0.2;
+  }
+  
+  .tabbrowser-tab::after,
+  .tabbrowser-tab::before {
+    border-left: 1px solid var(--lwt-background-tab-separator-color, currentColor);
+    margin-block: 5px 4px;
+    opacity: 0.3;
+  }
+  
+  /* Move the ::before pseudo-element on tabs 1px to the left
+   * to avoid resizing the tab when the pseudo-element is removed again
+   * (this currently happens when a tab is dragged and dropped).
+   *
+   * Note that this doesn't perfectly solve the issue (dragged tabs
+   * may still resize very slightly) on some DPI settings with uneven
+   * scaling factors on Windows, because of bug 477157.
+   */
+  .tabbrowser-tab::before {
+    margin-inline-start: -1px;
+  }
+  
+  :root[tabsintitlebar]:not([extradragspace]) #toolbar-menubar[autohide=true] + #TabsToolbar .tabbrowser-tab::after,
+  /* Show full height tab separators on hover and multiselection. */
+  .tabbrowser-tab:hover::after,
+  #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab[beforehovered]::after,
+  .tabbrowser-tab[multiselected]::after,
+  #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab[before-multiselected]::after {
+    margin-top: var(--tabs-top-border-width);
+    margin-bottom: 0;
+  }
+  
+  /* Show full height tab separators on selected tabs. */
+  #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab[beforeselected-visible]::after,
+  #tabbrowser-tabs[movingtab] > #tabbrowser-arrowscrollbox > .tabbrowser-tab[visuallyselected]::before,
+  .tabbrowser-tab[visuallyselected]::after {
+    border-color: var(--tab-selected-outline-color);
+    margin-top: 0;
+    margin-bottom: var(--tabs-navbar-shadow-size);
+    opacity: 1;
+  }
+  
+  .tabbrowser-tab::after,
+  /* Also show separators beside the selected tab when dragging it. */
+  #tabbrowser-tabs[movingtab] > #tabbrowser-arrowscrollbox > .tabbrowser-tab[visuallyselected]::before {
+    content: "";
+    display: block;
+  }
+
+  /* Makes the tab photon-like + adds a transition */
+  .tab-close-button {
+    border-radius: var(--photon-border-radius) !important;
+    transition: background var(--photon-speed-1) var(--photon-easing-function) !important;
+    list-style-image: url(chrome://global/skin/icons/close.svg);
+  }
+  .tab-close-button {
+    padding-inline: 0px !important;
+    padding-block: 0px !important;
+    margin-inline-end: -2px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .tabbrowser-tab > .tab-stack > .tab-background {
+    border-radius: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    transition: background var(--photon-speed-1) var(--photon-easing-function) !important;
+  }
+  /* Removes the spacing between tabs */
+  .tabbrowser-tab {
+    padding: 0 !important;
+  }
+  /* Prevents navbar from overlapping tabs bar and creating an outline between the tabs and navbar */
+  .tabbrowser-tab, #TabsToolbar #firefox-view-button, #titlebar {
+    z-index: 1 !important;
+  }
+  .tab-drop-indicator {
+    z-index: 3 !important;
+  }
+  #TabsToolbar {
+    z-index: 1 !important;
+  }
+  :root:is([tabsintitlebar], [customtitlebar]) :is(#titlebar, .browser-titlebar):-moz-window-inactive {
+    opacity: 1 !important;
+    .tab-content, &#nav-bar > * {
+      opacity: 0.8 !important;
+    }
+  }
+  /* Pushes the sound icon off to the side and makes the website favicon always show to make it
+  so that the sound icon doesn't look out of place
+  credits to phroton for some of this stuff */
+  #TabsToolbar .tabbrowser-tab:not([pinned]) .tab-icon-overlay {
+    border-radius: var(--photon-border-radius) !important;
+    padding: 0px !important;
+    opacity: 1 !important;
+    position: relative !important;
+    left: calc(100% - 6px) !important;
+    transition: background var(--photon-speed-1) var(--photon-easing-function) !important;
+    top: 0px !important;
+    &:hover {
+      background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
+      &:active {
+        background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
+      }
+    }
+  }
+  .tab-icon-overlay { 
+    &:not(:hover, :active) {
+      background: none !important;
+    }
+    background-image: none !important;
+    border: none !important;
+  }
+  .tab-icon-image:not([sharing]) {
+    &:not([sharing]) {
+      opacity: 1 !important;
+    }
+    &:not([busy]) {
+      display: block !important;
+    }
+  }
+  #TabsToolbar .tabbrowser-tab:not([pinned]) .tab-icon-stack {
+    position: absolute !important;
+    width: calc(100% - 6px - 42px) !important;
+  }
+  #tabbrowser-tabs[closebuttons^="activetab"] .tabbrowser-tab:not([visuallyselected]) .tab-icon-stack {
+    width: calc(100% - 24px) !important;
+  }
+  .tabbrowser-tab:not([pinned])[image] .tab-label-container, .tabbrowser-tab[busy] .tab-label-container {
+    margin-inline-start: 21px !important;
+  }
+  .tabbrowser-tab:is([muted], [soundplaying], [activemedia-blocked], [crashed="true"]) .tab-label-container {
+    margin-right: 20px;
+  }
+  /* Fixes for pinned tabs */
+  .tabbrowser-tab[pinned] .tab-icon-overlay {
+    transition: background var(--photon-speed-1) var(--photon-easing-function) !important;
+    padding: 1px !important;
+    background-image: linear-gradient(var(--lwt-selected-tab-background-color, transparent),
+      var(--lwt-selected-tab-background-color, transparent)),
+      linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)),
+      var(--lwt-header-image, none) !important;
+  }
+  :root[lwtheme="true"] .tabbrowser-tab:not([selected])[pinned] .tab-icon-overlay {
+    background: var(--lwt-accent-color) !important;
+  }
+  #tabbrowser-tabs[haspinnedtabs]:not([overflow]) .tabbrowser-tab {
+    margin-inline-start: 0 !important;
+  }
+  /* This will hide the label for pinned tabs cuz i'm lazy and dont wanna properly push the label off of the tab */
+  .tabbrowser-tab[pinned] .tab-label-container {
+    display: none !important;
+  }
+  .tabbrowser-tab:is([pinned][first-visible-tab]) {
+    margin: 0 !important;
+  }
+  /* from lepton */
+  .tabbrowser-tab:not([pinned]) .tab-icon-stack:not(:has(+ .tab-audio-button)) .tab-icon-overlay[pictureinpicture] {
+    /* Shape */
+    display: flex !important;
+    order: 2 !important;
+
+    /* Color */
+    fill: currentColor;
+    opacity: 0.8;
+    -moz-context-properties: fill;
+  }
+  .tab-icon-overlay[pictureinpicture][soundplaying] {
+    list-style-image: url(./icons/pictureinpicture-sound.svg) !important;
+  }
+  .tab-icon-overlay[pictureinpicture][muted] {
+    list-style-image: url(./icons/pictureinpicture-muted2.svg) !important;
+  }
+  /* Removes Proton's own border around the tab */
+  .tab-background:is([selected], [multiselected]):-moz-lwtheme {
+    border: none !important;
+  }
+  .tab-background, #firefox-view-button image {
+    outline: none !important;
+  }
+  /* Hides the "PLAYING"/"MUTED"/"PICTURE-IN-PICTURE"/"AUTOPLAY BLOCKED" text */
+  .tab-secondary-label {
+    display: none !important;
+  }
+  /* Adds the Photon highlight around the tab */
+  :root:not([style*="--lwt-accent-color: rgb(240, 240, 244); --lwt-text-color: rgba(21, 20, 26);"], 
+  [style*="--lwt-accent-color: rgb(28, 27, 34); --lwt-text-color: rgba(251, 251, 254);"]) #TabsToolbar[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
+    --photon-tab-outline: var(--lwt-accent-color);
+  }
+  .tab-background {
+    &::before {
+      display: block;
+      content: "";
+      height: 2px;
+      transition: all var(--photon-speed-2) var(--photon-easing-function);
+      background: var(--photon-tab-outline, var(--lwt-tab-line-color, var(--lwt-tabs-border-color, #0a84ff)));
+      width: 100%;
+      margin: auto;
+      top: -1px;
+      position:relative;
+    }
+    &:not([selected], [multiselected="true"])::before {
+      width: 0%;
+      opacity: 0;
+      filter: grayscale(100%);
+    }
+    .tabbrowser-tab:hover > .tab-stack > & {
+      &:not([selected])::before {
+        display: block;
+        content: "";
+        height: 2px;	
+        width: 100%;
+        opacity: .5;
+        background: var(--photon-tab-outline, var(--lwt-tab-line-color, var(--lwt-tabs-border-color, #0a84ff)));
+        filter: grayscale(100%);
+      }
+      &[multiselected="true"]::before {
+        filter: grayscale(0%);
+      }
+    }
+  }
+
+  /* Windows stuff */
+  @media (-moz-platform: windows) {
+    :root[sizemode="normal"] .tab-background::before {
+      translate: 0 1px
+    }
+  }
+
+  #TabsToolbar #tabs-newtab-button, #TabsToolbar #new-tab-button, #TabsToolbar #alltabs-button {
+    :root:not([uidensity]) & {
+      width: 32px !important;
+      height: 100px !important;
+      margin-bottom: 1px !important;
+      align-self: center
+    }
+    :root[uidensity="touch"] & {
+      width: 32px !important;
+      padding: 0 !important;
+      align-content: center !important;
+      display: flex !important;
+      > .toolbarbutton-badge-stack {
+        width: 28px !important;
+        height: 28px !important;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  #alltabs-button[overflowedItem="true"] .toolbarbutton-badge-stack {
+    padding-inline: 0 !important;
+  }
+  #TabsToolbar #tabs-newtab-button, #TabsToolbar #new-tab-button {
+    > image {
+      padding: 6px !important;
+      width: 28px !important;
+      height: 28px !important;
+    }
+  }
+  /* Firefox View */
+  :root:not([privatebrowsingmode="temporary"], [firefoxviewhidden]) {
+    #tabbrowser-tabs {
+      &[overflow] {
+        padding-inline-start: var(--tab-overflow-pinned-tabs-width) !important;
+      }
+      &:not([overflow]) {
+        padding-inline-start: 0 !important;
+      }
+      border-inline-start-color: transparent !important;
+    }
+  }
+  #TabsToolbar #firefox-view-button {
+    margin-bottom: 0 !important;
+    padding-inline: 0 !important;
+    .toolbarbutton-icon {
+      box-shadow: none !important;
+      transition: all var(--photon-speed-2) var(--photon-easing-function) !important;
+      --toolbarbutton-hover-background: var(--tab-hover-background-color) !important;
+    }
+    &::after {
+      display: block;
+      content: "";
+      height: 2px;
+      width: var(--tab-min-height);
+      transition: all var(--photon-speed-2) var(--photon-easing-function);
+      background: var(--photon-tab-outline, var(--lwt-tab-line-color, var(--lwt-tabs-border-color, #0a84ff)));
+      position: absolute !important;
+      translate: 0 calc(-1 * var(--tab-min-height)/2);
+      filter: grayscale(100%);
+    }
+    &[aria-pressed="true"]::after {
+      filter: grayscale(0%);
+    }
+    &:not([aria-pressed="true"], :hover)::after {
+      opacity: 0;
+      width: 0;
+    }
+    &:not([aria-pressed="true"]):hover::after {
+      filter: grayscale(100%);
+      opacity: .5;
+    }
+  }
+  #TabsToolbar #firefox-view-button + #tabbrowser-tabs {
+    margin-inline-start: -1px !important;
+  }
+  @media (-moz-platform: windows) {
+    :root[sizemode="normal"] #TabsToolbar #firefox-view-button::after {
+      translate: 0 calc(-1 * var(--tab-min-height)/2 + 2px);
+    }
+  }
+  #firefox-view-button::before {
+    position: relative !important;
+  }
+  .tabbrowser-tab[pinned]
+  .tab-stack::before {
+    bottom: 0px !important;
+  }
+  #tabbrowser-tabs::after {
+    display: none !important;
+  }
+  #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
+    > #tabbrowser-arrowscrollbox
+    > .tabbrowser-tab[first-visible-unpinned-tab] {
+    margin-inline-start: 0px !important;
+  }
+  /* Change the N in "left: Npx !important;" to different values if you're having issues or change left to right for rtl languages */
+  .tabbrowser-tab[pinned][first-visible-tab] {
+    position: absolute !important;
+    left: 0px !important;
+  }
+  :root:not([sizemode="maximized"], [sizemode="fullscreen"]) .tabbrowser-tab[pinned][first-visible-tab] {
+    left: 40px !important;
+  }
+  /* Makes the container tab label more-photon like */
+  .tabbrowser-tab[usercontextid] {
+    > .tab-stack > .tab-background > .tab-context-line {
+      translate: 0 calc(var(--tab-min-height) - 3px) !important;
+      border-radius: 0px !important;
+      transition: all var(--photon-speed-1) var(--photon-easing-function) !important;
+      justify-self: center !important;
+      margin-inline: auto !important;
+      .tabbrowser-tab:not([pinned]) & {
+        width: 60% !important;
+        .tabbrowser-tab[selected] & {
+          width: 80% !important;
+        }
+      }
+      .tabbrowser-tab[pinned] & {
+        margin-inline: 10px !important;
+        .tabbrowser-tab[selected] & {
+          margin-inline: 4px !important;
+        }
       }
     }
   }

@@ -8,7 +8,7 @@
     --glass-shadow-color: hsla(240,5%,5%,0.3);
   }
   
-  @media (-moz-platform: windows) {
+  @media not (-moz-windows-modern) {
     @media not (-moz-windows-classic) {
       :root[sizemode="normal"] #toolbar-menubar:not([autohide="true"]) > #menubar-items,
       :root[sizemode="normal"] #toolbar-menubar[autohide="true"][inactive] + #TabsToolbar > .toolbar-items {
@@ -309,11 +309,11 @@
         }
       }
 
-      .tabbrowser-tab:not([visuallyselected]) {
+      /*.tabbrowser-tab:not([visuallyselected]) {
         @media not (-moz-windows-fog) {
           text-shadow: white 0px 0px 4px;
         }
-      }
+      }*/
     }
   }
   

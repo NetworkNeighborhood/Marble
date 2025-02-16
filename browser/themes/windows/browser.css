@@ -74,13 +74,13 @@
      :root[tabsintitlebar] #toolbar-menubar[autohide="true"] {
        height: var(--tab-min-height);
      }
-  }
   
-  /* Add 4px extra margin on top of the tabs toolbar on Windows 7. */
-  @media (-moz-platform: windows) {
-    :root[sizemode="normal"][chromehidden~="menubar"] #TabsToolbar > .toolbar-items,
-    :root[sizemode="normal"] #toolbar-menubar[autohide="true"][inactive] + #TabsToolbar > .toolbar-items {
-      padding-top: 4px;
+    /* Add 4px extra margin on top of the tabs toolbar on Windows 7. */
+    @media (-moz-platform: windows) {
+      :root[sizemode="normal"][chromehidden~="menubar"] #TabsToolbar > .toolbar-items,
+      :root[sizemode="normal"] #toolbar-menubar[autohide="true"][inactive] + #TabsToolbar > .toolbar-items {
+        padding-top: 4px;
+      }
     }
   }
   
@@ -121,8 +121,19 @@
         }
     }
 
-    :root[tabsintitlebar]:not([lwtheme]) .titlebar-button {
-      stroke: white;
+    :root[tabsintitlebar]:not([lwtheme]) {
+      .titlebar-button {
+        stroke: white;
+      }
+
+      @media not (prefers-color-scheme: dark) {
+        .titlebar-button:not(.titlebar-close):hover {
+          background-color: hsla(0,0%,100%,.22);
+        }
+        .titlebar-button:not(.titlebar-close):hover:active {
+          background-color: hsla(0,0%,100%,.32);
+        }
+      }
     }
    }
  }
