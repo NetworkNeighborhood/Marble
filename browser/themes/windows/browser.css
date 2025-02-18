@@ -75,8 +75,8 @@
        height: var(--tab-min-height);
      }
   
-    /* Add 4px extra margin on top of the tabs toolbar on Windows 7. */
-    @media (-moz-platform: windows) {
+    /* Add 4px extra margin on top of the tabs toolbar on Windows 7 when Photon is disabled */
+    @media (-moz-proton) {
       :root[sizemode="normal"][chromehidden~="menubar"] #TabsToolbar > .toolbar-items,
       :root[sizemode="normal"] #toolbar-menubar[autohide="true"][inactive] + #TabsToolbar > .toolbar-items {
         padding-top: 4px;

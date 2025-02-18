@@ -1215,8 +1215,10 @@ toolbar:not(#TabsToolbar) #firefox-view-button {
       background: var(--photon-tab-outline, var(--lwt-tab-line-color, var(--lwt-tabs-border-color, #0a84ff)));
       width: 100%;
       margin: auto;
-      top: -1px;
       position:relative;
+    }
+    :root:not([sizemode="maximized"], [sizemode="fullscreen"]) &::before {
+      top: -1px;
     }
     &:not([selected], [multiselected="true"])::before {
       width: 0%;
