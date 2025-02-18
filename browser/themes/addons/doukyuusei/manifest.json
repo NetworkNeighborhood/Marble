@@ -73,7 +73,7 @@
     },
 
     "properties": {
-      "color_scheme": "light",
+      "color_scheme": "dark",
       "additional_backgrounds_alignment": [
         "right center"
       ],
