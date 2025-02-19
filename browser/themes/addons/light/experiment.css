@@ -5,157 +5,159 @@
 /* Proton Light theme */
 @import url("chrome://browser/skin/light-dark-overrides.css");
 
-/* Photon overrides */
-:root {
-    --lwt-accent-color: #d7d7db !important;
-	--lwt-accent-color-inactive: var(--lwt-accent-color) !important;
-	--toolbar-bgcolor: #f9f9fa !important;
-	--in-content-page-background: var(--toolbar-bgcolor) !important;
-	--arrowpanel-border-color: #cccccc !important;
-	--urlbar-box-text-color: #747576 !important;
-	--panel-separator-color: hsla(210,4%,10%,.14) !important;
-	--button-hover-bgcolor: hsla(0,0%,80%,.5) !important;
-	--button-active-bgcolor: hsla(0,0%,80%,.8) !important;
-	--link-color: var(--photon-accent-dark) !important;
-	--photon-tab-outline: var(--photon-accent-dark);
-	--sidebar-background: #fff !important;
-	--autocomplete-popup-highlight-background: var(--photon-accent-dark) !important;
-	--toolbarbutton-hover-background: var(--lwt-toolbarbutton-hover-background, hsla(0,0%,70%,.4)) !important;
-	--toolbarbutton-active-background: var(--lwt-toolbarbutton-active-background, hsla(0,0%,70%,.6)) !important;
-	--autocomplete-popup-highlight-color: #fff !important;
-	--urlbarView-highlight-background: var(--photon-accent-dark) !important;
-	--urlbarView-highlight-color: #fff !important;
-	--urlbar-border-color: var(--photon-accent-dark);
-	--toolbarbutton-icon-fill-attention: var(--photon-accent-dark) !important;
-	--button-primary-bgcolor: var(--photon-accent-dark) !important;
-	--button-primary-color: #fff !important;
-	--button-primary-active-bgcolor: var(--photon-accent-light) !important;
-	--button-primary-hover-bgcolor: color-mix(in hsl, var(--photon-accent-light) 50%, var(--photon-accent-dark)) !important;
-	--in-content-primary-button-background: var(--photon-accent) !important;
-	--in-content-primary-button-background-hover: color-mix(in srgb, var(--photon-accent) 80%, white) !important;
-	--in-content-primary-button-background-active: color-mix(in srgb, var(--photon-accent) 60%, white) !important;
-	--chrome-content-separator-color: var(--lwt-accent-color) !important;
-	--button-background-color: var(--toolbarbutton-background) !important;
-	--button-background-color-hover: var(--toolbarbutton-hover-background) !important;
-	--button-background-color-active: var(--toolbarbutton-active-background) !important;
-	
-	#urlbar {
-		--urlbar-box-hover-bgcolor: hsla(0,0%,70%,.2) !important;
-		--urlbar-box-active-bgcolor: hsla(0,0%,70%,.3) !important;
-	}
-	:is(#urlbar-background,
-	#searchbar) {
-		background-color: white !important;
-		border: solid 1px #cccccc !important;
-	}
-	#urlbar:not([breakout-extend],
-	:hover) #urlbar-background {
-		box-shadow: 0px 0px 4px #0001 !important;
-	}
-	#urlbar:not([breakout-extend]):hover #urlbar-background {
-		box-shadow: 0px 0px 5px #0002 !important;
-	}
-	.tab-background[selected] {
-		background: #f9f9fa !important;
-	}
-	#nav-bar {
-		box-shadow: 0 calc(-1 * var(--tabs-navbar-shadow-size)) 0 #9e9fa1 !important;
-	}
-	:is(#TabsToolbar #firefox-view-button[aria-pressed="true"] .toolbarbutton-icon,
-	.tabbrowser-tab[selected]) {
-		box-shadow: calc(-1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1, calc(1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1 !important;
-	}
-	menupopup:not(#ContentSelectDropdownPopup), richlistbox:not(#PopupSearchAutoComplete richlistbox), #tab-preview-panel, panel[type="autocomplete-richlistbox"] {
-		--panel-background: var(--arrowpanel-background) !important;
-	}
-}
-@media not (-moz-gtk-csd-available) {
-	@media (prefers-color-scheme: light) {
-		:root:not([lwtheme="true"]) {
-			--lwt-accent-color: #202340 !important;
-			--lwt-accent-color-inactive: var(--lwt-accent-color) !important;
-			--toolbar-bgcolor: #f9f9fa !important;
-			--button-hover-bgcolor: hsla(0,0%,80%,.5) !important;
-			--in-content-page-background: var(--toolbar-bgcolor) !important;
-			--arrowpanel-border-color: #cccccc !important;
-			--urlbar-box-text-color: #747576 !important;
-			--panel-separator-color: hsla(210,4%,10%,.14) !important;
-			--button-active-bgcolor: hsla(0,0%,80%,.8) !important;
-			--link-color: var(--photon-accent-dark) !important;
-			--photon-tab-outline: var(--photon-accent-dark);
-			--sidebar-background: #fff !important;
-			--toolbarbutton-hover-background: var(--lwt-toolbarbutton-hover-background, hsla(0,0%,70%,.4)) !important;
-			--toolbarbutton-active-background: var(--lwt-toolbarbutton-active-background, hsla(0,0%,70%,.6)) !important;
-			--autocomplete-popup-highlight-background: var(--photon-accent-dark) !important;
-			--autocomplete-popup-highlight-color: #fff !important;
-			--urlbarView-highlight-background: var(--photon-accent-dark) !important;
-			--urlbarView-highlight-color: #fff !important;
-			--urlbar-border-color: var(--photon-accent-dark);
-			--toolbarbutton-icon-fill-attention: var(--photon-accent-dark) !important;
-			--button-primary-bgcolor: var(--photon-accent-dark) !important;
-			--button-primary-color: #fff !important;
-			--button-primary-active-bgcolor: var(--photon-accent-light) !important;
-			--button-primary-hover-bgcolor: color-mix(in hsl, var(--photon-accent-light) 50%, var(--photon-accent-dark)) !important;
-			--in-content-primary-button-background: var(--photon-accent) !important;
-			--in-content-primary-button-background-hover: color-mix(in srgb, var(--photon-accent) 80%, white) !important;
-			--in-content-primary-button-background-active: color-mix(in srgb, var(--photon-accent) 60%, white) !important;
-			--toolbar-non-lwt-bgcolor: var(--toolbar-bgcolor) !important;
-			--chrome-content-separator-color:  #d7d7db !important;
-			--toolbarbutton-icon-fill: currentColor !important;
-			--toolbox-non-lwt-textcolor: rgb(251, 251, 254) !important;
-			--toolbox-textcolor: rgb(251, 251, 254) !important;
-			--button-background-color: var(--toolbarbutton-background) !important;
-			--button-background-color-hover: var(--toolbarbutton-hover-background) !important;
-			--button-background-color-active: var(--toolbarbutton-active-background) !important;
-			
-			#urlbar {
-				--urlbar-box-hover-bgcolor: hsla(0,0%,70%,.2) !important;
-				--urlbar-box-active-bgcolor: hsla(0,0%,70%,.3) !important;
-			}
-			:is(#urlbar-background,
-			#searchbar) {
-				background-color: white !important;
-				border: solid 1px #cccccc !important;
-			}
-			#urlbar:not([breakout-extend],
-			:hover) #urlbar-background {
-				box-shadow: 0px 0px 4px #0001 !important;
-			}
-			#urlbar:not([breakout-extend]):hover #urlbar-background {
-				box-shadow: 0px 0px 5px #0002 !important;
-			}
-			.tab-background[selected] {
-				background: #f9f9fa !important;
-			}
-			#nav-bar {
-				box-shadow: 0 calc(-1 * var(--tabs-navbar-shadow-size)) 0 #9e9fa1 !important;
-			}
-			:is(#TabsToolbar #firefox-view-button[aria-pressed="true"] .toolbarbutton-icon,
-			.tabbrowser-tab[selected]) {
-				box-shadow: calc(-1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1, calc(1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1 !important;
-			}
-			#navigator-toolbox {
-				background: #d7d7db !important
-	    
-			}
-			#urlbar[breakout-extend] #urlbar-background {
-				border-color: solid 1px var(--photon-tab-outline) !important;
-			}
-			menupopup:not(#ContentSelectDropdownPopup), richlistbox:not(#PopupSearchAutoComplete richlistbox), #tab-preview-panel, panel[type="autocomplete-richlistbox"] {
-				--panel-background: var(--arrowpanel-background) !important;
-			}
+@media not (-moz-proton) {
+	/* Photon overrides */
+	:root {
+		--lwt-accent-color: #d7d7db !important;
+		--lwt-accent-color-inactive: var(--lwt-accent-color) !important;
+		--toolbar-bgcolor: #f9f9fa !important;
+		--in-content-page-background: var(--toolbar-bgcolor) !important;
+		--arrowpanel-border-color: #cccccc !important;
+		--urlbar-box-text-color: #747576 !important;
+		--panel-separator-color: hsla(210,4%,10%,.14) !important;
+		--button-hover-bgcolor: hsla(0,0%,80%,.5) !important;
+		--button-active-bgcolor: hsla(0,0%,80%,.8) !important;
+		--link-color: var(--photon-accent-dark) !important;
+		--photon-tab-outline: var(--photon-accent-dark);
+		--sidebar-background: #fff !important;
+		--autocomplete-popup-highlight-background: var(--photon-accent-dark) !important;
+		--toolbarbutton-hover-background: var(--lwt-toolbarbutton-hover-background, hsla(0,0%,70%,.4)) !important;
+		--toolbarbutton-active-background: var(--lwt-toolbarbutton-active-background, hsla(0,0%,70%,.6)) !important;
+		--autocomplete-popup-highlight-color: #fff !important;
+		--urlbarView-highlight-background: var(--photon-accent-dark) !important;
+		--urlbarView-highlight-color: #fff !important;
+		--urlbar-border-color: var(--photon-accent-dark);
+		--toolbarbutton-icon-fill-attention: var(--photon-accent-dark) !important;
+		--button-primary-bgcolor: var(--photon-accent-dark) !important;
+		--button-primary-color: #fff !important;
+		--button-primary-active-bgcolor: var(--photon-accent-light) !important;
+		--button-primary-hover-bgcolor: color-mix(in hsl, var(--photon-accent-light) 50%, var(--photon-accent-dark)) !important;
+		--in-content-primary-button-background: var(--photon-accent) !important;
+		--in-content-primary-button-background-hover: color-mix(in srgb, var(--photon-accent) 80%, white) !important;
+		--in-content-primary-button-background-active: color-mix(in srgb, var(--photon-accent) 60%, white) !important;
+		--chrome-content-separator-color: var(--lwt-accent-color) !important;
+		--button-background-color: var(--toolbarbutton-background) !important;
+		--button-background-color-hover: var(--toolbarbutton-hover-background) !important;
+		--button-background-color-active: var(--toolbarbutton-active-background) !important;
+		
+		#urlbar {
+			--urlbar-box-hover-bgcolor: hsla(0,0%,70%,.2) !important;
+			--urlbar-box-active-bgcolor: hsla(0,0%,70%,.3) !important;
 		}
-		@media not ((-moz-windows-accent-color-in-titlebar) or (-moz-bool-pref: "uc.toolbar.transparency")) {
+		:is(#urlbar-background,
+		#searchbar) {
+			background-color: white !important;
+			border: solid 1px #cccccc !important;
+		}
+		#urlbar:not([breakout-extend],
+		:hover) #urlbar-background {
+			box-shadow: 0px 0px 4px #0001 !important;
+		}
+		#urlbar:not([breakout-extend]):hover #urlbar-background {
+			box-shadow: 0px 0px 5px #0002 !important;
+		}
+		.tab-background[selected] {
+			background: #f9f9fa !important;
+		}
+		#nav-bar {
+			box-shadow: 0 calc(-1 * var(--tabs-navbar-shadow-size)) 0 #9e9fa1 !important;
+		}
+		:is(#TabsToolbar #firefox-view-button[aria-pressed="true"] .toolbarbutton-icon,
+		.tabbrowser-tab[selected]) {
+			box-shadow: calc(-1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1, calc(1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1 !important;
+		}
+		/*menupopup:not(#ContentSelectDropdownPopup), richlistbox:not(#PopupSearchAutoComplete richlistbox), #tab-preview-panel, panel[type="autocomplete-richlistbox"] {
+			--panel-background: var(--arrowpanel-background) !important;
+		}*/
+	}
+	@media not (-moz-gtk-csd-available) {
+		@media (prefers-color-scheme: light) {
 			:root:not([lwtheme="true"]) {
+				--lwt-accent-color: #202340 !important;
+				--lwt-accent-color-inactive: var(--lwt-accent-color) !important;
+				--toolbar-bgcolor: #f9f9fa !important;
+				--button-hover-bgcolor: hsla(0,0%,80%,.5) !important;
+				--in-content-page-background: var(--toolbar-bgcolor) !important;
+				--arrowpanel-border-color: #cccccc !important;
+				--urlbar-box-text-color: #747576 !important;
+				--panel-separator-color: hsla(210,4%,10%,.14) !important;
+				--button-active-bgcolor: hsla(0,0%,80%,.8) !important;
+				--link-color: var(--photon-accent-dark) !important;
+				--photon-tab-outline: var(--photon-accent-dark);
+				--sidebar-background: #fff !important;
+				--toolbarbutton-hover-background: var(--lwt-toolbarbutton-hover-background, hsla(0,0%,70%,.4)) !important;
+				--toolbarbutton-active-background: var(--lwt-toolbarbutton-active-background, hsla(0,0%,70%,.6)) !important;
+				--autocomplete-popup-highlight-background: var(--photon-accent-dark) !important;
+				--autocomplete-popup-highlight-color: #fff !important;
+				--urlbarView-highlight-background: var(--photon-accent-dark) !important;
+				--urlbarView-highlight-color: #fff !important;
+				--urlbar-border-color: var(--photon-accent-dark);
+				--toolbarbutton-icon-fill-attention: var(--photon-accent-dark) !important;
+				--button-primary-bgcolor: var(--photon-accent-dark) !important;
+				--button-primary-color: #fff !important;
+				--button-primary-active-bgcolor: var(--photon-accent-light) !important;
+				--button-primary-hover-bgcolor: color-mix(in hsl, var(--photon-accent-light) 50%, var(--photon-accent-dark)) !important;
+				--in-content-primary-button-background: var(--photon-accent) !important;
+				--in-content-primary-button-background-hover: color-mix(in srgb, var(--photon-accent) 80%, white) !important;
+				--in-content-primary-button-background-active: color-mix(in srgb, var(--photon-accent) 60%, white) !important;
+				--toolbar-non-lwt-bgcolor: var(--toolbar-bgcolor) !important;
+				--chrome-content-separator-color:  #d7d7db !important;
+				--toolbarbutton-icon-fill: currentColor !important;
+				--toolbox-non-lwt-textcolor: rgb(251, 251, 254) !important;
+				--toolbox-textcolor: rgb(251, 251, 254) !important;
+				--button-background-color: var(--toolbarbutton-background) !important;
+				--button-background-color-hover: var(--toolbarbutton-hover-background) !important;
+				--button-background-color-active: var(--toolbarbutton-active-background) !important;
+				
+				#urlbar {
+					--urlbar-box-hover-bgcolor: hsla(0,0%,70%,.2) !important;
+					--urlbar-box-active-bgcolor: hsla(0,0%,70%,.3) !important;
+				}
+				:is(#urlbar-background,
+				#searchbar) {
+					background-color: white !important;
+					border: solid 1px #cccccc !important;
+				}
+				#urlbar:not([breakout-extend],
+				:hover) #urlbar-background {
+					box-shadow: 0px 0px 4px #0001 !important;
+				}
+				#urlbar:not([breakout-extend]):hover #urlbar-background {
+					box-shadow: 0px 0px 5px #0002 !important;
+				}
+				.tab-background[selected] {
+					background: #f9f9fa !important;
+				}
+				#nav-bar {
+					box-shadow: 0 calc(-1 * var(--tabs-navbar-shadow-size)) 0 #9e9fa1 !important;
+				}
+				:is(#TabsToolbar #firefox-view-button[aria-pressed="true"] .toolbarbutton-icon,
+				.tabbrowser-tab[selected]) {
+					box-shadow: calc(-1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1, calc(1 * var(--tabs-navbar-shadow-size)) 0 0 #9e9fa1 !important;
+				}
 				#navigator-toolbox {
-					background: #202340 !important;
+					background: #d7d7db !important
+			
 				}
-				#titlebar {
-					color: rgb(251, 251, 254) !important;
-					--toolbarbutton-icon-fill: rgb(251, 251, 254);
+				#urlbar[breakout-extend] #urlbar-background {
+					border-color: solid 1px var(--photon-tab-outline) !important;
 				}
-				#titlebar #firefox-view-button[open] {
-					--toolbarbutton-icon-fill: #5b5b66;
+				menupopup:not(#ContentSelectDropdownPopup), richlistbox:not(#PopupSearchAutoComplete richlistbox), #tab-preview-panel, panel[type="autocomplete-richlistbox"] {
+					--panel-background: var(--arrowpanel-background) !important;
+				}
+			}
+			@media not ((-moz-windows-accent-color-in-titlebar) or (-moz-bool-pref: "uc.toolbar.transparency")) {
+				:root:not([lwtheme="true"]) {
+					#navigator-toolbox {
+						background: #202340 !important;
+					}
+					#titlebar {
+						color: rgb(251, 251, 254) !important;
+						--toolbarbutton-icon-fill: rgb(251, 251, 254);
+					}
+					#titlebar #firefox-view-button[open] {
+						--toolbarbutton-icon-fill: #5b5b66;
+					}
 				}
 			}
 		}
