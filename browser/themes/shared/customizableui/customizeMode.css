@@ -67,8 +67,9 @@
     margin-block: 0;
   }
 }
+%endif /* defined(XP_MACOSX) || defined(XP_WIN) */
 
-#widget-overflow-fixed-list > toolbarpaletteitem:not([notransition])[place="panel"],
+#widget-overflow-fixed-list > toolbarpaletteitem:not([notransition])[place="menu-panel"],
 toolbarpaletteitem:not([notransition])[place="toolbar"] {
   transition: border-width var(--drag-drop-transition-duration) ease-in-out;
 }
