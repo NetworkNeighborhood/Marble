@@ -1393,7 +1393,7 @@ CustomizeMode.prototype = {
 
   openAddonsManagerThemes(aEvent) {
     aEvent.target.parentNode.parentNode.hidePopup();
-    AMTelemetry.recordLinkEvent({ object: "customize", value: "manageThemes" });
+    /*AMTelemetry.recordLinkEvent({ object: "customize", value: "manageThemes" });*/
     this.window.BrowserOpenAddonsMgr("addons://list/theme");
   },
 
@@ -1557,7 +1557,7 @@ CustomizeMode.prototype = {
       return tbb;
     }
 
-    let themes = await AddonManager.getAddonsByTypes(["theme"]);
+    let themes = await lazy.AddonManager.getAddonsByTypes(["theme"]);
     let currentTheme = themes.find(theme => theme.isActive);
 
     // Move the current theme (if any) and the default themes to the start:
@@ -1590,11 +1590,11 @@ CustomizeMode.prototype = {
       button.addEventListener("command", async () => {
         onThemeSelected(panel);
         await button.theme.enable();
-        AMTelemetry.recordActionEvent({
+        /*AMTelemetry.recordActionEvent({
           object: "customize",
           action: "enable",
           extra: { type: "theme", addonId: theme.id },
-        });
+        });*/
       });
       panel.insertBefore(button, footer);
     }
